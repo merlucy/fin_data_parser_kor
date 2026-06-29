@@ -1,0 +1,28 @@
+[project]
+name = "fin-data-parser"
+version = "0.1.0"
+description = "Korean stock sector screener built on OpenDART + KRX financial data"
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.31",
+    "lxml>=5.0",
+    "pandas>=2.1",
+    "SQLAlchemy>=2.0",
+    "psycopg2-binary>=2.9",
+    "alembic>=1.13",
+    "streamlit>=1.32",
+    "plotly>=5.20",
+    "pydantic-settings>=2.2",
+    "tenacity>=8.2",
+    "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[tool.setuptools.packages.find]
+include = ["krx*", "dart_client*", "universe*", "calculations*", "db*", "app*", "jobs*"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
