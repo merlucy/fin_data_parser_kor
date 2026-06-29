@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-GROWTH_FIELDS = ["gross_profit", "operating_income", "net_income"]
+GROWTH_FIELDS = ["revenue", "gross_profit", "operating_income", "net_income"]
 
 
 def _yoy(curr: float | None, prev: float | None) -> float | None:

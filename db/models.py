@@ -5,6 +5,7 @@ from sqlalchemy import (
     Date,
     DateTime,
     ForeignKey,
+    Integer,
     Numeric,
     String,
     UniqueConstraint,
@@ -102,12 +103,38 @@ class CompanyFinancialsCalculated(Base):
     has_convertible_instruments: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False)
     convertible_instruments_value: Mapped[float | None] = mapped_column(Numeric)
 
+    revenue_growth_yoy: Mapped[float | None] = mapped_column(Numeric)
     gross_profit_growth_yoy: Mapped[float | None] = mapped_column(Numeric)
     operating_income_growth_yoy: Mapped[float | None] = mapped_column(Numeric)
     net_income_growth_yoy: Mapped[float | None] = mapped_column(Numeric)
+    revenue_cagr_5y: Mapped[float | None] = mapped_column(Numeric)
     gross_profit_cagr_5y: Mapped[float | None] = mapped_column(Numeric)
     operating_income_cagr_5y: Mapped[float | None] = mapped_column(Numeric)
     net_income_cagr_5y: Mapped[float | None] = mapped_column(Numeric)
+
+    gross_margin: Mapped[float | None] = mapped_column(Numeric)
+    operating_margin: Mapped[float | None] = mapped_column(Numeric)
+    net_margin: Mapped[float | None] = mapped_column(Numeric)
+    gross_margin_change_yoy: Mapped[float | None] = mapped_column(Numeric)
+    operating_margin_change_yoy: Mapped[float | None] = mapped_column(Numeric)
+    net_margin_change_yoy: Mapped[float | None] = mapped_column(Numeric)
+
+    # Shares / dilution
+    shares_outstanding: Mapped[float | None] = mapped_column(Numeric)
+    share_count_change_yoy: Mapped[float | None] = mapped_column(Numeric)
+
+    # Window-level (5y) deltas, repeated on each year row
+    gross_margin_change_5y: Mapped[float | None] = mapped_column(Numeric)
+    operating_margin_change_5y: Mapped[float | None] = mapped_column(Numeric)
+    net_margin_change_5y: Mapped[float | None] = mapped_column(Numeric)
+    share_count_change_5y: Mapped[float | None] = mapped_column(Numeric)
+    total_debt_change_5y: Mapped[float | None] = mapped_column(Numeric)
+
+    # Three-pillar investment scorecard (0/1/2 per pillar, 0-6 overall)
+    score_margin_growth: Mapped[int | None] = mapped_column(Integer)
+    score_low_dilution: Mapped[int | None] = mapped_column(Integer)
+    score_capital_efficiency: Mapped[int | None] = mapped_column(Integer)
+    score_overall: Mapped[int | None] = mapped_column(Integer)
 
     calculated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 

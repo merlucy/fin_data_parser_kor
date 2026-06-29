@@ -11,12 +11,30 @@ import pandas as pd
 import streamlit as st
 
 from db import repository
-from universe.resolver import list_industries
+from universe.resolver import list_industries, search_companies
 
 
 @st.cache_data(ttl=300)
 def get_industries() -> list[str]:
     return list_industries()
+
+
+@st.cache_data(ttl=300)
+def get_companies_df(name_query: str | None = None, industry: str | None = None) -> pd.DataFrame:
+    companies = search_companies(name_query=name_query, industry=industry)
+    return pd.DataFrame(
+        [
+            {
+                "corp_name": c.corp_name,
+                "stock_code": c.stock_code,
+                "market": c.market,
+                "sector": c.sector,
+                "industry": c.industry,
+                "is_active": c.is_active,
+            }
+            for c in companies
+        ]
+    )
 
 
 @st.cache_data(ttl=30)

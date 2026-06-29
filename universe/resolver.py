@@ -40,3 +40,22 @@ def list_industries() -> list[str]:
         return [row[0] for row in session.execute(stmt).all() if row[0]]
     finally:
         session.close()
+
+
+def search_companies(name_query: str | None = None, industry: str | None = None) -> list[Company]:
+    """Look up companies in the universe by name/ticker substring and/or exact industry match.
+
+    Backs the company encyclopedia page: either filter narrows the result, both can be combined.
+    """
+    session = get_session()
+    try:
+        stmt = select(Company)
+        if name_query:
+            pattern = f"%{name_query}%"
+            stmt = stmt.where(Company.corp_name.ilike(pattern) | Company.stock_code.ilike(pattern))
+        if industry:
+            stmt = stmt.where(Company.industry == industry)
+        stmt = stmt.order_by(Company.corp_name)
+        return list(session.execute(stmt).scalars().all())
+    finally:
+        session.close()

@@ -1,5 +1,10 @@
 BASE_URL = "https://opendart.fss.or.kr/api"
 FNLTT_SINGL_ACNT_ALL_URL = f"{BASE_URL}/fnlttSinglAcntAll.json"
+STOCK_TOTQY_STTUS_URL = f"{BASE_URL}/stockTotqySttus.json"  # 주식의 총수 현황 (total shares outstanding)
+
+# Pseudo fs_div used to namespace the shares-outstanding responses in the shared
+# filesystem cache (the shares endpoint has no consolidated/separate distinction).
+FS_DIV_SHARES = "SHARES"
 
 REPRT_CODE_ANNUAL = "11011"  # 사업보고서 (annual report)
 REPRT_CODE_HALF = "11012"
